@@ -72,7 +72,27 @@
 
 **2. gc的流程**  
 [《java深入篇之GC》](https://www.jianshu.com/p/b4760ef4b07f)  
+
 **3. java软引用与弱引用区别**  
+- 先说`强引用`，创建一个对象，并正常使用，这种就属于强引用。如果一个对象持具有强引用，那么GC绝对不会回收它。当内存空间不足时，JVM宁愿抛出OutOfMemoryError错误，也不会轻易回收强引用。
+- `软引用SoftReference`，通过例如以下方式进行创建    
+
+      String str=new String("abc");                                     // 强引用
+      SoftReference<String> softRef=new SoftReference<String>(str);     // 软引用     
+
+&ensp;&ensp;&ensp;&ensp;系统触发GC时，如果内存足够，则不会回收弱引用，只有内存不足时才会对弱引用执行回收。
+- `弱引用WeakReference`，创建方式与SoftReference类似，与SoftReference的区别在于，系统触发GC时，只要发现有弱引用，不管内存是否足够，都会对其进行回收。    
+- ``虚引用``，顾名思义，就是形同虚设。与其他几种引用都不同，虚引用并不会决定对象的生命周期。如果一个对象仅持有虚引用，那么它就和没有任何引用一样，在任何时候都可能被垃圾回收器回收。
+
+&ensp;&ensp;&ensp;&ensp;虚引用主要用来跟踪对象被垃圾回收器回收的活动。虚引用与软引用和弱引用的一个区别在于：虚引用必须和引用队列(ReferenceQueue)联合使用。当垃圾回收器准备回收一个对象时，如果发现它还有虚引用，就会在回收对象的内存之前，把这个虚引用加入到与之关联的引用队列中。
+
+    String str = new String("abc");
+    ReferenceQueue queue = new ReferenceQueue();
+    // 创建虚引用，要求必须与一个引用队列关联
+    PhantomReference pr = new PhantomReference(str, queue);
+&ensp;&ensp;&ensp;&ensp;复制代码程序可以通过判断引用队列中是否已经加入了虚引用，来了解被引用的对象是否将要进行垃圾回收。如果程序发现某个虚引用已经被加入到引用队列，那么就可以在所引用的对象的内存被回收之前采取必要的行动。
+
+
 **4. java中的this编译时的原理**  
 **5. final变量用反射修改**
 
