@@ -105,9 +105,10 @@
 
 
 **6. HashMap的内部结构，给定一个key，如何找到对应的value，使用equal**  
-1、首先判断Key是否为Null，如果为null，直接查找Enrty[0]，如果不是Null，先计算Key的HashCode，然后经过二次Hash，得到Hash值。  
-2、根据Hash值，对Entry[]的长度length求余，得到的就是Entry数组的index。  
-3、根据对应的索引找到对应的数组，就是找到了其所在的链表，然后按照链表的操作对Value进行插入、删除和查询操作  
+- 首先判断Key是否为Null，如果为null，直接查找Enrty[0]，如果不是Null，先计算Key的HashCode，然后经过二次Hash，得到Hash值。  
+- 根据Hash值，对Entry[]的长度length求余，得到的就是Entry数组的index。  
+- 根据对应的索引找到对应的数组，就是找到了其所在的链表，然后按照链表的操作对Value进行插入、删除和查询操作  
+
 **7. volatile**  
 **8. Java线程池有什么作用**  
 **9. Java动态代理**  
