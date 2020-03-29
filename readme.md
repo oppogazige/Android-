@@ -5,4 +5,5 @@
 
 ### 我自己整理的Android面试知识
 [抖音直播面试](/doc/抖音面试题.md)    
-[头条-视频方向android职位面试题](/doc/头条视频方向Android面试题.md)
+[头条-视频方向android职位面试题](/doc/头条视频方向Android面试题.md)    
+[启动速度优化](/doc/启动速度优化.md)
