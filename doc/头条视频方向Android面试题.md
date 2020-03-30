@@ -112,8 +112,28 @@
 **7. volatile**  
 **8. Java线程池有什么作用**  
 **9. Java动态代理**  
+- [10分钟带你了解动态代理](https://juejin.im/post/5a99048a6fb9a028d5668e62)    
+- 动态代理的核心知识点：利用Java的反射机制，为你想要代理的类动态创建一个代理类（Proxy），而该代理类真正在执行代理方法时，是交给InvocationHandler类的invoke方法实现的，你可以自由实现invoke方法。在该方法参数里有动态代理类本身、代理类实现的接口列表、动态代理类执行的代理方法（Method），因此你可以在这个接口里自行选择代理某个方法（根据方法名），在执行这个方法的前后添加自己的逻辑，也可以修改该方法的返回值和传入参数来达到面向切面（AOP）编程的目的。    
+
 **10. handler机制**  
+- Handler的三大核心类，Looper，Message，MessageQueue     
+- 每个Looper持有一个MessageQueue，负责无限循环的从MessageQueue中取出一个Message进行处理，如果MessageQueue中没有Message，则进入阻塞？状态
+- Message中持有一个Handler对象，Looper每次取出Message处理时，实际上就是执行这个Handler对象的dispatchMessage方法
+- 每个线程只有一个Looper，Looper通过调用Looper.prepare方法进行创建并存入ThreadLocal中，然后调用loop方法让它进入循环
+- 获取主线程的Looper可通过Looper.getMainLooper方法获取    
+
 **11. android跨进程通信的方式**  
+- [知乎高赞回答：为什么Android使用Binder机制来实现IPC呢？](https://zhuanlan.zhihu.com/p/116440847)
+- Android中跨进程通信的方式有：通过Intent启动Activity、发送Broadcast，通过ContentProvider共享，通过SD卡共享，通过Messanger通信，通过开启本地端口然后简历Socket通信，以及aidl
+- Intent、ContentProvider、Messanger、aidl底层都是通过Binder实现
+- Binder是Android特有的进程间通信机制，它通过Binder驱动实现，相比Socket有更好的安全性与速度
+- Binder相对Socket（从A用户空间拷贝到内核空间，再从内核空间拷贝到B用户空间）少一次内存拷贝，Binder利用内存映射的方式，将B用户空间和内核空间映射起来，拷贝的时候是从A用户空间拷贝到内核空间，实现一次拷贝
+- Binder相对Socket更安全的机制是Android为每个进程分配了一个UID，这个UID是完全由系统分配，在系统层就决定了哪个UID的进程能和当前进程通信。而不像Socket，端口是暴露的，任何进程都可以尝试建立连接。
+- 首先，一个进程使用 BINDER_SET_CONTEXT_MGR 命令通过 Binder 驱动将自己注册成为 ServiceManager；    
+Server 通过驱动向 ServiceManager 中注册 Binder（Server 中的 Binder 实体），表明可以对外提供服务。驱动为这个 Binder 创建位于内核中的实体节点以及 ServiceManager 对实体的引用，将名字以及新建的引用打包传给 ServiceManager，ServiceManger 将其填入查找表。     
+Client 通过名字，在 Binder 驱动的帮助下从 ServiceManager 中获取到对 Binder 实体的引用，通过这个引用就能实现和 Server 进程的通信。
+
+
 **12.自定义控件方式**  
 **13.Canvas绘制过什么 手写功能**  
 **14.断点续传的实现**  
